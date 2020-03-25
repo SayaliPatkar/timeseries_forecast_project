@@ -1,0 +1,23 @@
+train.train\_test\_split
+========================
+
+.. automodule:: train.train_test_split
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      split_by_date
+      split_by_file
+   
+   
+
+   
+   
+   
+
+   
+   
+   

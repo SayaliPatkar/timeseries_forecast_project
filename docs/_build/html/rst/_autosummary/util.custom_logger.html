@@ -1,0 +1,376 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>util.custom_logger &mdash; electricity_forecast 1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="util.load_data" href="util.load_data.html" />
+    <link rel="prev" title="util.constants" href="util.constants.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> electricity_forecast
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">electricity_forecast_project</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../test.html">test package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../train.html">train package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../util.html">util package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../util.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util.html#module-util.constants">util.constants module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util.html#module-util.custom_logger">util.custom_logger module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util.html#module-util.load_data">util.load_data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util.html#module-util.model_manipulation">util.model_manipulation module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../util.html#module-util.result_filing">util.result_filing module</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../util.html#module-util">Module contents</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="util.constants.html">util.constants</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">util.custom_logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="util.load_data.html">util.load_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="util.model_manipulation.html">util.model_manipulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="util.result_filing.html">util.result_filing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">electricity_forecast</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../modules.html">electricity_forecast_project</a> &raquo;</li>
+        
+          <li><a href="../util.html">util package</a> &raquo;</li>
+        
+      <li>util.custom_logger</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/rst/_autosummary/util.custom_logger.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-util.custom_logger">
+<span id="util-custom-logger"></span><h1>util.custom_logger<a class="headerlink" href="#module-util.custom_logger" title="Permalink to this headline">¶</a></h1>
+<p>This module handles logging</p>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../util.html#util.custom_logger.CustomLogger" title="util.custom_logger.CustomLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomLogger</span></code></a>(app_name)</td>
+<td>Customized logging solution</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../util.html#util.custom_logger.LoggerAdapter" title="util.custom_logger.LoggerAdapter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LoggerAdapter</span></code></a>(logger,&nbsp;prefix)</td>
+<td>To create logs with unique run_id</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="util.custom_logger.CustomLogger">
+<em class="property">class </em><code class="descclassname">util.custom_logger.</code><code class="descname">CustomLogger</code><span class="sig-paren">(</span><em>app_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#CustomLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.CustomLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Customized logging solution</p>
+<dl class="method">
+<dt id="util.custom_logger.CustomLogger.critical">
+<code class="descname">critical</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#CustomLogger.critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.CustomLogger.critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>CRITICAL log</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.CustomLogger.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#CustomLogger.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.CustomLogger.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>DEBUG log</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.CustomLogger.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#CustomLogger.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.CustomLogger.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>ERROR log</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.CustomLogger.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#CustomLogger.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.CustomLogger.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>INFO log</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.CustomLogger.warn">
+<code class="descname">warn</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#CustomLogger.warn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.CustomLogger.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>WARNING log</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="util.custom_logger.LoggerAdapter">
+<em class="property">class </em><code class="descclassname">util.custom_logger.</code><code class="descname">LoggerAdapter</code><span class="sig-paren">(</span><em>logger</em>, <em>prefix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#LoggerAdapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.LoggerAdapter</span></code></p>
+<p>To create logs with unique run_id</p>
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.critical">
+<code class="descname">critical</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.critical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate a critical call to the underlying logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.debug">
+<code class="descname">debug</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate a debug call to the underlying logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate an error call to the underlying logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.exception">
+<code class="descname">exception</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>exc_info=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate an exception call to the underlying logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.getEffectiveLevel">
+<code class="descname">getEffectiveLevel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.getEffectiveLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.getEffectiveLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the effective level for the underlying logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.hasHandlers">
+<code class="descname">hasHandlers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.hasHandlers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.hasHandlers" title="Permalink to this definition">¶</a></dt>
+<dd><p>See if the underlying logger has any handlers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.info">
+<code class="descname">info</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate an info call to the underlying logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.isEnabledFor">
+<code class="descname">isEnabledFor</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.isEnabledFor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.isEnabledFor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this logger enabled for level ‘level’?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>level</em>, <em>msg</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate a log call to the underlying logger, after adding
+contextual information from this adapter instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>msg</em>, <em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/util/custom_logger.html#LoggerAdapter.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process the logging message and keyword arguments passed in to
+a logging call to insert contextual information. You can either
+manipulate the message itself, the keyword args or both. Return
+the message and kwargs modified (or not) to suit your needs.</p>
+<p>Normally, you’ll only need to override this one method in a
+LoggerAdapter subclass for your specific needs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.setLevel">
+<code class="descname">setLevel</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.setLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.setLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the specified level on the underlying logger.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="util.custom_logger.LoggerAdapter.warning">
+<code class="descname">warning</code><span class="sig-paren">(</span><em>msg</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/logging.html#LoggerAdapter.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#util.custom_logger.LoggerAdapter.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate a warning call to the underlying logger.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="util.load_data.html" class="btn btn-neutral float-right" title="util.load_data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="util.constants.html" class="btn btn-neutral float-left" title="util.constants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Sayali Patkar
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

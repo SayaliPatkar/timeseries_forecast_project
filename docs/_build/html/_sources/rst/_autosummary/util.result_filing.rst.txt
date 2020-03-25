@@ -1,0 +1,24 @@
+util.result\_filing
+===================
+
+.. automodule:: util.result_filing
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      init_config_vars
+      save_meta_file
+      visualize_train_data
+   
+   
+
+   
+   
+   
+
+   
+   
+   

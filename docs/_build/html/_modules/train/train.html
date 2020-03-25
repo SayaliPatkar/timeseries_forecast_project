@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>train.train &mdash; electricity_forecast 1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> electricity_forecast
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rst/modules.html">electricity_forecast_project</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">electricity_forecast</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>train.train</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for train.train</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module handles training and validation task</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="k">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.multioutput</span> <span class="k">import</span> <span class="n">MultiOutputRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">explained_variance_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">f1_score</span>
+
+<span class="kn">from</span> <span class="nn">util</span> <span class="k">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+<span class="kn">from</span> <span class="nn">util</span> <span class="k">import</span> <span class="n">custom_logger</span><span class="p">,</span> <span class="n">load_data</span><span class="p">,</span> <span class="n">model_manipulation</span>
+<span class="kn">from</span> <span class="nn">train</span> <span class="k">import</span> <span class="n">train_test_split</span>
+
+<span class="n">file_id</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">TRAIN</span>
+
+<div class="viewcode-block" id="train_model"><a class="viewcode-back" href="../../rst/train.html#train.train.train_model">[docs]</a><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The method loads the training data, performs test_train split.</span>
+<span class="sd">    Trains the specific type of model with specific hyperparameters (as selected in config)</span>
+<span class="sd">    and saves the test results at specified output directory.</span>
+<span class="sd">    For additional configuration info, look up documentation of config.yaml</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">run_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">custom_logger</span><span class="o">.</span><span class="n">CustomLogger</span><span class="p">(</span><span class="n">run_id</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="n">file_id</span><span class="p">)</span>
+    <span class="n">train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="c1"># More split and/or corssvailation approaches can be added to</span>
+    <span class="c1"># from train.train_test_split.py</span>
+    <span class="n">split_type</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">train_test_split</span><span class="o">.</span><span class="n">type</span>
+    <span class="k">if</span> <span class="n">split_type</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">SPLIT_BY_DATE</span><span class="p">:</span>
+        <span class="n">split_date</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">train_test_split</span><span class="o">.</span><span class="n">date</span>
+        <span class="n">train_file_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">train_test_split</span><span class="o">.</span><span class="n">train</span>
+        <span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="o">.</span><span class="n">split_by_date</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">train_file_name</span><span class="p">,</span> <span class="n">split_date</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">split_type</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">SPLIT_BY_FILES</span><span class="p">:</span>
+        <span class="n">train_file_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">train_test_split</span><span class="o">.</span><span class="n">train</span>
+        <span class="n">test_file_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">train_test_split</span><span class="o">.</span><span class="n">test</span>
+        <span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="o">.</span><span class="n">split_by_file</span><span class="p">(</span><span class="n">run_id</span><span class="p">,</span> <span class="n">train_file_name</span><span class="p">,</span> <span class="n">test_file_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">train_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">test_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;The data is loaded successfully&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Empty dataframe loaded&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;Empty dataframe loaded&#39;</span><span class="p">)</span>
+
+    <span class="c1"># m past smaples to consider for prediction</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">m</span>
+    <span class="c1"># n next steps to predict</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">n</span>
+    <span class="c1"># which model to train</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">model_type</span>
+    <span class="c1"># this dictionary will be stored as model metadata</span>
+    <span class="n">model_info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;model_type&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">model</span>
+    <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;past_m&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">m</span>
+    <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;next_n&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">n</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Selected </span><span class="si">%s</span><span class="s1"> model to predict next </span><span class="si">%d</span><span class="s1"> steps using past </span><span class="si">%d</span><span class="s1"> steps.&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Train df : </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">train_df</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test df : </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">test_df</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
+    <span class="c1"># converting loaded dataframe to consider past m values and predict next n</span>
+    <span class="c1"># all the rows having NaN values are dropped</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">load_data</span><span class="o">.</span><span class="n">create_custom_data_structure</span><span class="p">(</span><span class="n">train_df</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">load_data</span><span class="o">.</span><span class="n">create_custom_data_structure</span><span class="p">(</span><span class="n">test_df</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;X_train_shape&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;y_train_shape&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;X_test_shape&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;y_test_shape&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;X_train : </span><span class="si">%s</span><span class="s1"> and y_train: </span><span class="si">%s</span><span class="s1"> &#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;X_test : </span><span class="si">%s</span><span class="s1"> and y_test: </span><span class="si">%s</span><span class="s1"> &#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
+    <span class="n">has_null</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">y_train</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">y_test</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="o">+</span> <span class="n">X_test</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">has_null</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Successfuly built custom data structure for (</span><span class="si">%d</span><span class="s1"> input steps, </span><span class="si">%d</span><span class="s1"> output steps) supervised prediction&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Built custom dataframes have &#39;</span><span class="p">,</span> <span class="n">has_null</span> <span class="p">,</span><span class="s1">&#39; NaN values&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;Built custom dataframes have &#39;</span><span class="p">,</span> <span class="n">has_null</span> <span class="p">,</span><span class="s1">&#39; NaN values&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">model</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">LIN_REG</span><span class="p">:</span>
+        <span class="n">lr_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+        <span class="n">lr_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">y_test_predict</span> <span class="o">=</span> <span class="n">lr_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="c1"># Since this is multi_output regression problem, more sophisticated</span>
+        <span class="c1"># metrics can be calculated, also there is overlap between predicted values</span>
+        <span class="c1"># as next n predictions are done for sliding past m values, new metrics</span>
+        <span class="c1"># should justify this sliding window structure too</span>
+        <span class="n">avg_error</span> <span class="o">=</span> <span class="n">explained_variance_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_predict</span><span class="p">,</span> <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;uniform_average&#39;</span><span class="p">)</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;validation_avg_error&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">avg_error</span>
+        <span class="n">model_manipulation</span><span class="o">.</span><span class="n">pickle_model</span><span class="p">(</span><span class="n">lr_model</span><span class="p">,</span> <span class="n">model_info</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Selected </span><span class="si">%s</span><span class="s1"> model predicts with </span><span class="si">%d</span><span class="s1"> average validation error.&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">avg_error</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">RAN_FOR_REG</span><span class="p">:</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">random_forest_regression</span><span class="o">.</span><span class="n">max_depth</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">random_forest_regression</span><span class="o">.</span><span class="n">random_state</span>
+
+        <span class="n">rf_model</span><span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">],</span>
+                                        <span class="n">random_state</span><span class="o">=</span><span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">])</span>
+        <span class="n">rf_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">y_test_predict</span> <span class="o">=</span> <span class="n">rf_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="c1"># Since this is multi_output regression problem, more sophisticated</span>
+        <span class="c1"># metrics can be calculated, also there is overlap between predicted values</span>
+        <span class="c1"># as next n predictions are done for sliding past m values, new metrics</span>
+        <span class="c1"># should justify this sliding window structure too</span>
+        <span class="n">avg_error</span> <span class="o">=</span> <span class="n">explained_variance_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_predict</span><span class="p">,</span> <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;uniform_average&#39;</span><span class="p">)</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;validation_avg_error&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">avg_error</span>
+        <span class="n">pickle_model</span><span class="p">(</span><span class="n">rf_model</span><span class="p">,</span> <span class="n">model_info</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Selected </span><span class="si">%s</span><span class="s1"> model predicts with </span><span class="si">%d</span><span class="s1"> average validation error.&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">avg_error</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">DEC_TREE_REG</span><span class="p">:</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">decison_tree_regression</span><span class="o">.</span><span class="n">max_depth</span>
+        <span class="n">dt_model</span><span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">])</span>
+        <span class="n">dt_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">y_test_predict</span> <span class="o">=</span> <span class="n">dt_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="c1"># Since this is multi_output regression problem, more sophisticated</span>
+        <span class="c1"># metrics can be calculated, also there is overlap between predicted values</span>
+        <span class="c1"># as next n predictions are done for sliding past m values, new metrics</span>
+        <span class="c1"># should justify this sliding window structure too</span>
+        <span class="n">avg_error</span> <span class="o">=</span> <span class="n">explained_variance_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_predict</span><span class="p">,</span> <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;uniform_average&#39;</span><span class="p">)</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;validation_avg_error&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">avg_error</span>
+        <span class="n">pickle_model</span><span class="p">(</span><span class="n">dt_model</span><span class="p">,</span> <span class="n">model_info</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Selected </span><span class="si">%s</span><span class="s1"> model predicts with </span><span class="si">%d</span><span class="s1"> average validation error.&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">avg_error</span><span class="p">))</span>                    <span class="c1"># fit() with instantiated object</span>
+
+    <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="n">const</span><span class="o">.</span><span class="n">MULT_OP_REG</span><span class="p">:</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">multi_output_regression</span><span class="o">.</span><span class="n">n_estimators</span>
+        <span class="n">mor_model</span><span class="o">=</span> <span class="n">MultiOutputRegressor</span><span class="p">(</span>
+            <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">]))</span>
+        <span class="n">mor_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">y_test_predict</span> <span class="o">=</span> <span class="n">mor_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="c1"># Since this is multi_output regression problem, more sophisticated</span>
+        <span class="c1"># metrics can be calculated, also there is overlap between predicted values</span>
+        <span class="c1"># as next n predictions are done for sliding past m values, new metrics</span>
+        <span class="c1"># should justify this sliding window structure too</span>
+        <span class="n">avg_error</span> <span class="o">=</span> <span class="n">explained_variance_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test_predict</span><span class="p">,</span> <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;uniform_average&#39;</span><span class="p">)</span>
+        <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;validation_avg_error&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">avg_error</span>
+        <span class="n">pickle_model</span><span class="p">(</span><span class="n">mor_model</span><span class="p">,</span> <span class="n">model_info</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Selected </span><span class="si">%s</span><span class="s1"> model predicts with </span><span class="si">%d</span><span class="s1"> average validation error.&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">avg_error</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Sayali Patkar
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

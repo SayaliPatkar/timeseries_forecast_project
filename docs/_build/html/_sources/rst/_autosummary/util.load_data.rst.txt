@@ -1,0 +1,23 @@
+util.load\_data
+===============
+
+.. automodule:: util.load_data
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      create_custom_data_structure
+      load_from_tsv
+   
+   
+
+   
+   
+   
+
+   
+   
+   

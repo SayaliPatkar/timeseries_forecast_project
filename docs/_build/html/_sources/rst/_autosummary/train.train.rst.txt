@@ -1,0 +1,22 @@
+train.train
+===========
+
+.. automodule:: train.train
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      train_model
+   
+   
+
+   
+   
+   
+
+   
+   
+   

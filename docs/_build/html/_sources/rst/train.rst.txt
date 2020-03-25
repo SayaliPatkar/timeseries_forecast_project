@@ -1,0 +1,30 @@
+train package
+=============
+
+Submodules
+----------
+
+train.train module
+------------------
+
+.. automodule:: train.train
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+train.train\_test\_split module
+-------------------------------
+
+.. automodule:: train.train_test_split
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: train
+    :members:
+    :undoc-members:
+    :show-inheritance:

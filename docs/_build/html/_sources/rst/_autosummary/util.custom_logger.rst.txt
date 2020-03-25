@@ -1,0 +1,23 @@
+util.custom\_logger
+===================
+
+.. automodule:: util.custom_logger
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      CustomLogger
+      LoggerAdapter
+   
+   
+
+   
+   
+   

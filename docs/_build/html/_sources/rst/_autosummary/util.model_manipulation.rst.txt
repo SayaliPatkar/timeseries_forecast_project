@@ -1,0 +1,23 @@
+util.model\_manipulation
+========================
+
+.. automodule:: util.model_manipulation
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      pickle_model
+      unpickle_model
+   
+   
+
+   
+   
+   
+
+   
+   
+   

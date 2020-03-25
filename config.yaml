@@ -1,0 +1,59 @@
+info:
+  ###
+  # unique id for distinguishing logs
+  run_id : '006'
+  ###
+  # m past smaples to consider for prediction default 10
+  m : 10
+  ###
+  # n next steps to predict default 5
+  n : 5
+  ###
+  # operation_type could be 'training' or 'deployment'
+  operation_type : 'training'
+  ###
+  # it is mandatory to provide model_type for 'training'
+  # choose from 'linear_regression' 'random_forest_regression'
+  #'decison_tree_regression' 'multi_output_regression'
+  model_type : 'multi_output_regression'
+  ###
+  # it is mandatory to provide relative model_file path for 'deployment'
+  model_file : './output/001/001_linear_regression.pkl'
+  ###
+  # parent location for storing output
+  output_dir : 'output'
+
+train_test_split:
+  ###
+  # it is mandatory to provide type for 'training'
+  # choose from 'by_date' 'by_files'
+  type : 'by_date'
+  ###
+  # it is mandatory to provide date if type is chosen 'by_date'
+  date : '2015-07-12'
+  ###
+  # it is mandatory to provide train and test file paths if type is chosen 'by_files'
+  train : './data/intraday-2015.tsv'
+  ###
+  # it is mandatory to provide train and test file paths if type is chosen 'by_files'
+  test : './data/intraday-2016.tsv'
+
+visualize:
+  train_data : True
+  train_fname : 'training_data_visualization.pdf'
+
+###
+# to set hyperparameters for the training random_forest_regressor
+random_forest_regression:
+  max_depth : 100
+  random_state : 7
+
+###
+# to set hyperparameters for the training decison_tree_regressor
+decison_tree_regression:
+  max_depth : 100
+
+###
+# to set hyperparameters for the training multi_output_regressor
+multi_output_regression:
+  n_estimators : 100

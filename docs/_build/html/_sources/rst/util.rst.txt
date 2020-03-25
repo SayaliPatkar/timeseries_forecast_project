@@ -1,0 +1,54 @@
+util package
+============
+
+Submodules
+----------
+
+util.constants module
+---------------------
+
+.. automodule:: util.constants
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+util.custom\_logger module
+--------------------------
+
+.. automodule:: util.custom_logger
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+util.load\_data module
+----------------------
+
+.. automodule:: util.load_data
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+util.model\_manipulation module
+-------------------------------
+
+.. automodule:: util.model_manipulation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+util.result\_filing module
+--------------------------
+
+.. automodule:: util.result_filing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: util
+    :members:
+    :undoc-members:
+    :show-inheritance:

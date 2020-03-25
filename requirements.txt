@@ -1,0 +1,4 @@
+yamlargparse==1.31.1
+pandas==0.23.1
+matplotlib==2.2.2
+scikit_learn==0.22.2.post1
